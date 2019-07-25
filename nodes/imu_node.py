@@ -103,6 +103,9 @@ port = rospy.get_param('~port', default_port)
 #read calibration parameters
 port = rospy.get_param('~port', default_port)
 
+# frame
+imu_frame = rospy.get_param('~imu_frame', 'base_imu_link')
+
 #accelerometer
 accel_x_min = rospy.get_param('~accel_x_min', -250.0)
 accel_x_max = rospy.get_param('~accel_x_max', 250.0)
@@ -255,7 +258,7 @@ while not rospy.is_shutdown():
     imuMsg.orientation.z = q[2]
     imuMsg.orientation.w = q[3]
     imuMsg.header.stamp= rospy.Time.now()
-    imuMsg.header.frame_id = 'base_imu_link'
+    imuMsg.header.frame_id = imu_frame
     imuMsg.header.seq = seq
     seq = seq + 1
     pub.publish(imuMsg)
